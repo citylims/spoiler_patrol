@@ -8,8 +8,8 @@ chrome.runtime.onInstalled.addListener(details => {
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   var display = request.message.toString();
   chrome.browserAction.setBadgeText({text: display});
-})l
+});
 
 chrome.browserAction.onClicked.addListener(function() {
   //
-})
+});
