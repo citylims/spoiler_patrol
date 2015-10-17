@@ -7,4 +7,10 @@ function spoilerSearch(word) {
   var regex = new RegExp('\\b' + str + '\\b', 'gi');
   var matchRegex = $(document.body).text().match(regex);
   var count = matchRegex ? matchRegex.length : 0;
+  chrome.runtime.sendMessage({
+      message: count
+  });
 }
+
+
+spoilerSearch("spoiler")
