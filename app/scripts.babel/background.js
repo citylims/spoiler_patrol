@@ -4,6 +4,12 @@ chrome.runtime.onInstalled.addListener(details => {
   console.log('previousVersion', details.previousVersion);
 });
 
-chrome.browserAction.setBadgeText({text: '\'Allo'});
+//Listeners
+chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+  var display = request.message.toString();
+  chrome.browserAction.setBadgeText({text: display});
+})l
 
-console.log('\'Allo \'Allo! Event Page for Browser Action');
+chrome.browserAction.onClicked.addListener(function() {
+  //
+})
