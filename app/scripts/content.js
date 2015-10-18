@@ -23,8 +23,8 @@ var noSpoilers = function(obj) {
     count += matchCount;
   }
   console.log(count);
-  chrome.extension.sendMessage({
-      add: count
+  chrome.runtime.sendMessage({spoilerCount: count}, function(response) {
+    console.log(response.success);
   });
 }
 
