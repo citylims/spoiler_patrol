@@ -1,18 +1,37 @@
-function spoilerSearch(word) {
-  console.log(word);
-  var str = word;
-  console.log(word);
-  if (str === '') {
-    return;
+function hoist() {
+  getArray();
+}
+
+var noSpoilers = function(obj) {
+  var spoilers = obj.spoilers
+  var count = 0;
+  for (var i = 0; i < spoilers.length; i++) {
+    console.log(spoilers[i]);
+    spoilerSearch(spoilers[i]);
   }
-  var regex = new RegExp('\\b' + str + '\\b', 'gi');
-  var matchRegex = $(document.body).text().match(regex);
-  var count = matchRegex ? matchRegex.length : 0;
+
+  function spoilerSearch(word) {
+    console.log(word);
+    var str = word;
+    if (str === '') {
+      return;
+    }
+    var regex = new RegExp('\\b' + str + '\\b', 'gi');
+    var matchRegex = $(document.body).text().match(regex);
+    var matchCount = matchRegex ? matchRegex.length : 0;
+    console.log(matchCount);
+    count += matchCount;
+  }
   console.log(count);
   chrome.extension.sendMessage({
       add: count
   });
 }
 
+function getArray() {
+  chrome.storage.sync.get(["spoilers"], function(result) {
+    noSpoilers(result);
+  })
+}
 
-spoilerSearch("spoiler")
+hoist();
