@@ -9,8 +9,8 @@ function spoilerSearch(word) {
   var matchRegex = $(document.body).text().match(regex);
   var count = matchRegex ? matchRegex.length : 0;
   console.log(count);
-  chrome.runtime.sendMessage({
-      message: count
+  chrome.extension.sendMessage({
+      add: count
   });
 }
 
