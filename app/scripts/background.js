@@ -2,32 +2,12 @@ chrome.runtime.onInstalled.addListener(details => {
   console.log('previousVersion', details.previousVersion);
 });
 
-chrome.storage.sync.get('value', function(items) {
-  console.log(items);
-  var allKeys = Object.keys(items);
-  console.log(allKeys);
-});
-
-//listen for spoiler count
-chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-  console.log(request);
-  var display = request.message;
-  var count = request.length;
-  console.log(count);
-  chrome.browserAction.setBadgeText({text: count});
-});
-
-//listen for popup events
+//listen for spoiler count from content.js
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.add) {
-    console.log("add spoiler");
-    sendResponse(request.add);
-  }
-  else {
-    console.log("debug");
-  }
+    console.log(request.spoilerCount)
+    if (request.spoilerCount) {
+      sendResponse({success: "updated count in background"});
+      var display = request.spoilerCount.toString();
+      chrome.browserAction.setBadgeText({text: display});
+    }
 });
-
-function backgroundFunction () {
-  return "backgroundFunction"
-}
