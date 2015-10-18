@@ -1,7 +1,6 @@
 var app = chrome.extension.getBackgroundPage();
 
 document.body.onload = function() {
-//get array from synch
   init();
 }
 
@@ -10,11 +9,12 @@ function init() {
 }
 
 function getArray() {
+  //get spoilers array from storage
   chrome.storage.sync.get(["spoilers"], function(result) {
     console.log(result);
     var arr = result.spoilers;
     updatePopup(arr);
-  })
+  });
 }
 
 function defineArr(str) {
@@ -23,6 +23,7 @@ function defineArr(str) {
     console.log(arr);
     arr.unshift(str);
     var jsonObj = {};
+    //update popup. need to abstract this.
     updatePopup(arr);
     jsonObj["spoilers"] = arr;
     chrome.storage.sync.set(jsonObj, function() {
@@ -53,12 +54,8 @@ $('#add-btn').click(function(e) {
     //sync str with chrome storage
     defineArr(str);
     //broadcast to background
-    chrome.runtime.sendMessage({add: str}, function(response) {
-      console.log(response.farewell);
-      // updatePopup(str)
-    });
-    chrome.runtime.sendMessage({greeting: "greeting"}, function(response) {
-      console.log(response.farewell);
+    chrome.runtime.sendMessage({}, function(response) {
+      //get response
     });
   }
 });
