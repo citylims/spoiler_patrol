@@ -18,7 +18,6 @@ function getArray() {
 }
 
 function refresh() {
-
   chrome.runtime.sendMessage({refresh: true}, function(response) {
     console.log(response.success);
   })
@@ -55,6 +54,10 @@ function updatePopup(arr) {
   }
 }
 
+
+//events//
+
+//define spoiler
 $('#add-btn').click(function(e) {
   e.preventDefault();
   var str = $('input').val();
@@ -64,8 +67,8 @@ $('#add-btn').click(function(e) {
   }
 });
 
-//remove this item
+//remove li
 $('#spoilers').on('click', '.delete', function() {
-    $(this).closest('li').remove();
-    refresh();
+  $(this).closest('li').remove();
+  refresh();
 });
