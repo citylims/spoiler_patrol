@@ -29,7 +29,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 });
 
-
 function refreshTabs() {
   console.log("update")
   chrome.tabs.query({}, function(tabs) {
