@@ -34,8 +34,7 @@ function defineArr(str) {
     jsonObj["spoilers"] = arr;
     chrome.storage.sync.set(jsonObj, function() {
         console.log(jsonObj);
-        console.log("Saved a new array item");
-        //broadcast
+        refresh();
     });
   });
 }
