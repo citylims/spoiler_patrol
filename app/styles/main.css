@@ -1,3 +1,23 @@
 body {
-  padding: 100px;
+  width: 200px;
+}
+
+#spoilers {
+  list-style-type: none;
+  padding: 5px;
+}
+
+#spoilers li {
+  padding: 1em;
+  margin: 0.25em;
+  background: #CCC;
+}
+
+
+#spoilers span {
+  margin-right: 10px;
+}
+
+#spoilers li.new {
+  opacity: 0;
 }
