@@ -22,7 +22,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
     //refresh tabs
     if(request.refresh) {
-      console.log("yeeeeee");
+      console.log("refresh");
       sendResponse({success: "Success"});
       // chrome.runtime.reload();
       refreshTabs();
