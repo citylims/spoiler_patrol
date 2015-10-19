@@ -17,6 +17,13 @@ function getArray() {
   });
 }
 
+function refresh() {
+
+  chrome.runtime.sendMessage({refresh: true}, function(response) {
+    console.log(response.success);
+  })
+}
+
 function defineArr(str) {
   chrome.storage.sync.get(["spoilers"], function(result) {
     var arr = result["spoilers"] ? result["spoilers"] : [];
@@ -29,6 +36,7 @@ function defineArr(str) {
     chrome.storage.sync.set(jsonObj, function() {
         console.log(jsonObj);
         console.log("Saved a new array item");
+        //broadcast
     });
   });
 }
@@ -40,10 +48,10 @@ function updatePopup(arr) {
     $("#spoilers").empty();
     for (var i = 0; i < arr.length; i++) {
       console.log(arr[i]);
-      $("#spoilers").append('<li>'+ arr[i] + '</li>');
+      $("#spoilers").append('<li>'+ arr[i] + '<span class="delete">X</span></li>');
     }
   } else {
-    $("#empty-msg").text("No saves spoilers");
+    $("#spoilers").append('<h1> No spoilers added</h1>');
   }
 }
 
@@ -51,11 +59,13 @@ $('#add-btn').click(function(e) {
   e.preventDefault();
   var str = $('input').val();
   if (str !== "") {
-    //sync str with chrome storage
+    //synch
     defineArr(str);
-    //broadcast to background
-    chrome.runtime.sendMessage({}, function(response) {
-      //get response
-    });
   }
+});
+
+//remove this item
+$('#spoilers').on('click', '.delete', function() {
+    $(this).closest('li').remove();
+    refresh();
 });
