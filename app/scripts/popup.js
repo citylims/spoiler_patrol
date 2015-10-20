@@ -14,6 +14,12 @@ function init() {
   defineArray();
 };
 
+function refresh() {
+  chrome.runtime.sendMessage({refresh: true}, function(response) {
+    console.log(response.success);
+  });
+};
+
 function defineArray(str, bool) {
   chrome.storage.sync.get(["spoilers"], function(result) {
     console.log(result);
@@ -27,19 +33,6 @@ function defineArray(str, bool) {
     } else {
       updatePopup(arr);
     }
-  });
-};
-
-function setArray(obj, arr) {
-  chrome.storage.sync.set(obj, function() {
-    updatePopup(arr);
-    refresh();
-  })
-}
-
-function refresh() {
-  chrome.runtime.sendMessage({refresh: true}, function(response) {
-    console.log(response.success);
   });
 };
 
@@ -62,6 +55,13 @@ function removeSync(arr, str) {
   jsonObj.spoilers = arr;
   setArray(jsonObj, arr);
 };
+
+function setArray(obj, arr) {
+  chrome.storage.sync.set(obj, function() {
+    updatePopup(arr);
+    refresh();
+  })
+}
 
 //popupContent
 function updatePopup(arr) {
