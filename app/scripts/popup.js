@@ -6,10 +6,6 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     console.log("updated storage");
 });
 
-document.body.onload = function() {
-  init();
-};
-
 function init() {
   defineArray();
 };
