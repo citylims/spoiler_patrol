@@ -1,57 +1,83 @@
 var app = chrome.extension.getBackgroundPage();
 
+init();
+
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+    console.log("updated storage");
+});
+
 document.body.onload = function() {
   init();
-}
+};
 
 function init() {
-  getArray();
-}
+  defineArray();
+};
 
-function getArray() {
-  //get spoilers array from storage
+function defineArray(str, bool) {
   chrome.storage.sync.get(["spoilers"], function(result) {
     console.log(result);
-    var arr = result.spoilers;
-    updatePopup(arr);
+    var arr = result.spoilers ? result.spoilers : [];
+    if (str && bool) {
+      console.log("add");
+      addSync(arr, str);
+    } else if (str && !bool) {
+      console.log("remove");
+      removeSync(arr, str);
+    } else {
+      updatePopup(arr);
+    }
   });
+};
+
+function setArray(obj, arr) {
+  chrome.storage.sync.set(obj, function() {
+    updatePopup(arr);
+    refresh();
+  })
 }
 
 function refresh() {
   chrome.runtime.sendMessage({refresh: true}, function(response) {
     console.log(response.success);
-  })
-}
-
-function defineArr(str) {
-  chrome.storage.sync.get(["spoilers"], function(result) {
-    var arr = result["spoilers"] ? result["spoilers"] : [];
-    console.log(arr);
-    arr.unshift(str);
-    var jsonObj = {};
-    //update popup. need to abstract this.
-    updatePopup(arr);
-    jsonObj["spoilers"] = arr;
-    chrome.storage.sync.set(jsonObj, function() {
-        console.log(jsonObj);
-        refresh();
-    });
   });
-}
+};
 
+function addSync(arr, str) {
+  console.log(arr);
+  arr.unshift(str);
+  var jsonObj = {};
+  jsonObj.spoilers = arr;
+  setArray(jsonObj, arr);
+};
+
+function removeSync(arr, str) {
+  console.log(arr);
+  console.log(str);
+  var index = arr.indexOf(str);
+  if (index !== -1) {
+    arr.splice(index, 1);
+  }
+  var jsonObj = {};
+  jsonObj.spoilers = arr;
+  setArray(jsonObj, arr);
+};
+
+//popupContent
 function updatePopup(arr) {
   console.log(arr);
   if (arr.length) {
     arr.reverse();
     $("#spoilers").empty();
     for (var i = 0; i < arr.length; i++) {
-      console.log(arr[i]);
-      $("#spoilers").append('<li>'+ arr[i] + '<span class="delete">X</span></li>');
+      $("#spoilers").append('<li><p>'+ arr[i] + '</p><span class="delete">X</span></li>');
     }
   } else {
     $("#spoilers").append('<h1> No spoilers added</h1>');
   }
-}
+};
+
+//////////////events//////////////
 
 
 //events//
@@ -61,13 +87,15 @@ $('#add-btn').click(function(e) {
   e.preventDefault();
   var str = $('input').val();
   if (str !== "") {
-    //synch
-    defineArr(str);
+    defineArray(str, true);
   }
 });
 
-//remove li
 $('#spoilers').on('click', '.delete', function() {
-  $(this).closest('li').remove();
-  refresh();
+    console.log($(this).prev().text());
+    var str = $(this).prev().text();
+    console.log(str);
+    $(this).closest('li').remove();
+    defineArray(str, false);
+>>>>>>> refactor define array for add/remove item from sync storage
 });
