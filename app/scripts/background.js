@@ -2,12 +2,26 @@ chrome.runtime.onInstalled.addListener(details => {
   console.log('previousVersion', details.previousVersion);
 });
 
-chrome.tabs.onUpdated.addListener(function(tab) {
+//refresh for new tab
+chrome.tabs.onCreated.addListener(function(tabId, changeInfo, tab) {
     chrome.tabs.executeScript({file: 'content.js'});
 });
 
-chrome.tabs.onCreated.addListener(function(tabId, changeInfo, tab) {
-    chrome.tabs.executeScript({file: 'content.js'});
+//refresh for active tab
+chrome.tabs.onActivated.addListener(function(activeInfo) {
+    chrome.tabs.get(activeInfo.tabId, function (tab) {
+        chrome.tabs.executeScript({file: 'content.js'});
+    });
+});
+
+//refresh for current tab
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, updatedTab) {
+    chrome.tabs.query({'active': true}, function (activeTabs) {
+        var activeTab = activeTabs[0];
+        if (activeTab == updatedTab) {
+          chrome.tabs.executeScript({file: 'content.js'});
+        }
+    });
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -22,8 +36,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       chrome.browserAction.setBadgeText({text: "0"});
       sendResponse({success: "no matched spoilers"});
     }
-    //refresh tabs
-    if(request.refresh) {
+    //updated spoiler event in popup - refresh all tabs 
+    if (request.refresh) {
       console.log("refresh");
       sendResponse({success: "Success"});
       // chrome.runtime.reload();
