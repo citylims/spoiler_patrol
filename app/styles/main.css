@@ -1,27 +1,35 @@
 body {
-  width: 200px;
-}
+  width: 200px; }
 
 #spoilers {
   list-style-type: none;
-  padding: 5px;
-}
+  padding: 5px; }
+  #spoilers li {
+    position: relative;
+    padding: 1em;
+    margin: 0.25em;
+    background-color: #ccc; }
+    #spoilers li.new {
+      opacity: 0; }
+    #spoilers li p {
+      font-size: 14px;
+      display: inline; }
+    #spoilers li span {
+      position: absolute;
+      right: 12px; }
 
-#spoilers li {
-  padding: 1em;
-  margin: 0.25em;
-  background: #CCC;
-}
+#searchWrap input {
+  padding: 3px; }
+  #searchWrap input:focus {
+    outline: none; }
+#searchWrap a.button {
+  text-decoration: none;
+  font-size: 10px;
+  border-radius: 2px;
+  background: transparent;
+  border: 2px solid #000;
+  padding: 3px 11px;
+  color: #000;
+  margin-top: 0px; }
 
-
-#spoilers span {
-  margin-right: 10px;
-}
-
-#spoilers li.new {
-  opacity: 0;
-}
-
-#searchWrap input:focus{
-  outline: none;
-}
+/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,44 @@
+body {
+  width: 200px;
+}
+
+#spoilers {
+  list-style-type: none;
+  padding: 5px;
+  li {
+    position: relative;
+    padding: 1em;
+    margin: 0.25em;
+    background-color: #ccc;
+    &.new {
+      opacity: 0;
+    }
+    p {
+      font-size: 14px;
+      display: inline;
+    }
+    span {
+      position: absolute;
+      right: 12px;
+    }
+  }
+}
+
+#searchWrap {
+  input {
+    padding: 3px;
+    &:focus {
+      outline: none
+    }
+  }
+  a.button {
+    text-decoration: none;
+    font-size: 10px;
+    border-radius: 2px;
+    background: rgba(0,0,0,0);
+    border: 2px solid #000;
+    padding: 3px 11px;
+    color: #000;
+    margin-top: 0px;
+  }
+}
