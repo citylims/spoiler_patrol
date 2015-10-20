@@ -1,3 +1,12 @@
+MutationObserver =  window.WebKitMutationObserver;
+
+var observer = new MutationObserver(function(mutations, observer) {
+    console.log(mutations);
+    hoist();
+});
+
+observer.observe(document, {subtree: true, childList: true});
+
 function hoist() {
   getArray();
   console.log('hoist')
