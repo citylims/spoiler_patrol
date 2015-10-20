@@ -75,14 +75,14 @@ function updatePopup(arr) {
 
 //////////////events//////////////
 
-$('#search-wrap').bind('keypress', function(e) {
+$('#searchWrap').bind('keypress', function(e) {
   console.log(e);
   if (e.which === 13) {
     spoilerInput();
   }
 });
 
-$("#add-btn").on('click', function(e) {
+$("#addBtn").on('click', function(e) {
   e.preventDefault();
   spoilerInput();
 })
