@@ -2,7 +2,7 @@ MutationObserver =  window.WebKitMutationObserver;
 
 var observer = new MutationObserver(function(mutations, observer) {
     console.log(mutations);
-    hoist();
+    setTimeout(hoist, 500);
 });
 
 observer.observe(document, {subtree: true, childList: true});
