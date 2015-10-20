@@ -3,9 +3,11 @@ chrome.runtime.onInstalled.addListener(details => {
 });
 
 chrome.tabs.onUpdated.addListener(function(tab) {
-    chrome.tabs.executeScript({
-        file: 'content.js'
-    });
+    chrome.tabs.executeScript({file: 'content.js'});
+});
+
+chrome.tabs.onCreated.addListener(function(tabId, changeInfo, tab) {
+    chrome.tabs.executeScript({file: 'content.js'});
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
