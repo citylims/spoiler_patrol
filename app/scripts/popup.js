@@ -79,10 +79,6 @@ function updatePopup(arr) {
 
 //////////////events//////////////
 
-
-//events//
-
-//define spoiler
 $('#add-btn').click(function(e) {
   e.preventDefault();
   var str = $('input').val();
@@ -97,5 +93,4 @@ $('#spoilers').on('click', '.delete', function() {
     console.log(str);
     $(this).closest('li').remove();
     defineArray(str, false);
->>>>>>> refactor define array for add/remove item from sync storage
 });
