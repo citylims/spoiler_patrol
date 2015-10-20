@@ -75,13 +75,17 @@ function updatePopup(arr) {
 
 //////////////events//////////////
 
-$('#add-btn').click(function(e) {
-  e.preventDefault();
-  var str = $('input').val();
-  if (str !== "") {
-    defineArray(str, true);
+$('#search-wrap').bind('keypress', function(e) {
+  console.log(e);
+  if (e.which === 13) {
+    spoilerInput();
   }
 });
+
+$("#add-btn").on('click', function(e) {
+  e.preventDefault();
+  spoilerInput();
+})
 
 $('#spoilers').on('click', '.delete', function() {
     console.log($(this).prev().text());
@@ -90,3 +94,10 @@ $('#spoilers').on('click', '.delete', function() {
     $(this).closest('li').remove();
     defineArray(str, false);
 });
+
+function spoilerInput() {
+  var str = $('input').val();
+  if (str) {
+    defineArray(str, true);
+  }
+}
