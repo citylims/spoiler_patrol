@@ -88,9 +88,7 @@ $("#addBtn").on('click', function(e) {
 })
 
 $('#spoilers').on('click', '.delete', function() {
-    console.log($(this).prev().text());
     var str = $(this).prev().text();
-    console.log(str);
     $(this).closest('li').remove();
     defineArray(str, false);
 });
