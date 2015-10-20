@@ -21,3 +21,7 @@ body {
 #spoilers li.new {
   opacity: 0;
 }
+
+#searchWrap input:focus{
+  outline: none;
+}
