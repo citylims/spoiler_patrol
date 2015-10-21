@@ -69,14 +69,13 @@ function updatePopup(arr) {
       $("#spoilers").append('<li><p>'+ arr[i] + '</p><span class="delete">X</span></li>');
     }
   } else {
-    $("#spoilers").append('<h1> No spoilers added</h1>');
+    $("#spoilers").append('<h1>No spoilers added</h1>');
   }
 };
 
 //////////////events//////////////
 
 $('#searchWrap').bind('keypress', function(e) {
-  console.log(e);
   if (e.which === 13) {
     spoilerInput();
   }
