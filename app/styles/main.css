@@ -14,7 +14,10 @@ body {
     #spoilers li p {
       font-size: 14px;
       display: inline; }
-    #spoilers li span {
+    #spoilers li .count {
+      position: absolute;
+      right: 55px; }
+    #spoilers li .delete {
       position: absolute;
       right: 12px; }
 
