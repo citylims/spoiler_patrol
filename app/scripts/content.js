@@ -20,27 +20,39 @@ function getArray() {
 };
 
 var noSpoilers = function(obj) {
-  var spoilers = obj.spoilers
-  var count = 0;
-  for (var i = 0; i < spoilers.length; i++) {
-    spoilerSearch(spoilers[i]);
+  var arr = obj.spoilers
+  var totalCount = 0;
+
+  for (var i = 0; i < arr.length; i++) {
+    spoilerSearch(i, arr);
   }
-  
-  function spoilerSearch(word) {
-    var str = word;
+
+  function spoilerSearch(index, arr) {
+    var str = arr[index].title;
     if (str === '') {
       return;
     }
     var regex = new RegExp('\\b' + str + '\\b', 'gi');
     var matchRegex = $(document.body).text().match(regex);
     var matchCount = matchRegex ? matchRegex.length : 0;
-    count += matchCount;
+    var spoiler = {title: str, count: matchCount};
+    arr[index] = spoiler;
+    jsonObj = {};
+    jsonObj.spoilers = arr;
+    setArray(jsonObj, arr);
+    totalCount += matchCount;
   };
 
-  console.log(count);
-  chrome.runtime.sendMessage({spoilerCount: count}, function(response) {
+  //send
+  chrome.runtime.sendMessage({spoilerCount: totalCount}, function(response) {
     console.log(response.success);
   });
 };
+
+function setArray(obj, arr) {
+  chrome.storage.sync.set(obj, function() {
+    console.log("set storage" + arr);
+  })
+}
 
 hoist();
