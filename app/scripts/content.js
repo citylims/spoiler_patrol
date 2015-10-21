@@ -19,20 +19,13 @@ function getArray() {
   })
 };
 
-chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.refresh) {
-    alert("Message recieved!");
-  }
-});
-
 var noSpoilers = function(obj) {
   var spoilers = obj.spoilers
   var count = 0;
-
   for (var i = 0; i < spoilers.length; i++) {
     spoilerSearch(spoilers[i]);
   }
-
+  
   function spoilerSearch(word) {
     var str = word;
     if (str === '') {
