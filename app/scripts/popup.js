@@ -6,6 +6,12 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     console.log("updated storage");
 });
 
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.spoilerCount) {
+    defineArray();
+  }
+});
+
 function init() {
   defineArray();
 };
