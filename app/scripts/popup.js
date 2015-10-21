@@ -33,23 +33,27 @@ function defineArray(str, bool) {
 };
 
 function addSync(arr, str) {
-  console.log(arr);
-  arr.unshift(str);
-  var jsonObj = {};
+  var spoiler = {
+    title: str,
+    count: 0
+  };
+  arr.push(spoiler);
+  jsonObj = {};
   jsonObj.spoilers = arr;
   setArray(jsonObj, arr);
 };
 
 function removeSync(arr, str) {
-  console.log(arr);
-  console.log(str);
-  var index = arr.indexOf(str);
-  if (index !== -1) {
-    arr.splice(index, 1);
+  for (var i = 0; i < arr.length; i ++) {
+    if (arr[i].title === str) {
+      console.log("match " + arr[i].title);
+      arr.splice(i, 1);
+      var jsonObj = {};
+      jsonObj.spoilers = arr;
+      setArray(jsonObj, arr);
+      break;
+    }
   }
-  var jsonObj = {};
-  jsonObj.spoilers = arr;
-  setArray(jsonObj, arr);
 };
 
 function setArray(obj, arr) {
@@ -66,10 +70,10 @@ function updatePopup(arr) {
     arr.reverse();
     $("#spoilers").empty();
     for (var i = 0; i < arr.length; i++) {
-      $("#spoilers").append('<li><p>'+ arr[i] + '</p><span class="delete">X</span></li>');
+      $("#spoilers").append('<li><p class="title">'+ arr[i].title + '</p><span class="count"> ' + arr[i].count + '</span><span class="delete">X</span></li>');
     }
   } else {
-    $("#spoilers").append('<h1>No spoilers added</h1>');
+    $("#spoilers").append('<h1>No Spoilers!</h1>');
   }
 };
 
@@ -84,10 +88,10 @@ $('#searchWrap').bind('keypress', function(e) {
 $("#addBtn").on('click', function(e) {
   e.preventDefault();
   spoilerInput();
-})
+});
 
 $('#spoilers').on('click', '.delete', function() {
-    var str = $(this).prev().text();
+    var str = $(this).prevAll('p').text();
     $(this).closest('li').remove();
     defineArray(str, false);
 });
