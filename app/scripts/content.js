@@ -9,7 +9,6 @@ observer.observe(document, {subtree: true, childList: true});
 
 function hoist() {
   getArray();
-  console.log('hoist')
 }
 
 function getArray() {
@@ -19,8 +18,14 @@ function getArray() {
   })
 };
 
+function setArray(obj, arr) {
+  chrome.storage.sync.set(obj, function() {
+    console.log("set storage" + arr);
+  })
+}
+
 var noSpoilers = function(obj) {
-  var arr = obj.spoilers
+  var arr = obj.spoilers;
   var totalCount = 0;
 
   for (var i = 0; i < arr.length; i++) {
@@ -29,7 +34,7 @@ var noSpoilers = function(obj) {
 
   function spoilerSearch(index, arr) {
     var str = arr[index].title;
-    if (str === '') {
+    if (!str) {
       return;
     }
     var regex = new RegExp('\\b' + str + '\\b', 'gi');
@@ -48,11 +53,5 @@ var noSpoilers = function(obj) {
     console.log(response.success);
   });
 };
-
-function setArray(obj, arr) {
-  chrome.storage.sync.set(obj, function() {
-    console.log("set storage" + arr);
-  })
-}
 
 hoist();
