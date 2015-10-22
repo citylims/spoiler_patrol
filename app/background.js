@@ -25,7 +25,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, updatedTab) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    console.log(request)
+    console.log(request);
     //get spoiler count from content
     if (request.spoilerCount) {
       console.log("spoilerCount:" + request.spoilerCount);
@@ -41,7 +41,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.refresh) {
       console.log("refresh");
       sendResponse({success: "Success"});
-      // chrome.runtime.reload();
       refreshTabs();
     }
 });
