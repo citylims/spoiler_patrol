@@ -1,8 +1,10 @@
 MutationObserver =  window.WebKitMutationObserver;
-
+var throttle = [];
 var observer = new MutationObserver(function(mutations, observer) {
-    console.log(mutations);
-    setTimeout(hoist, 500);
+    throttle.push(observer);
+    if (throttle.length % 3 === 0) {
+      hoist();
+    }
 });
 
 observer.observe(document, {subtree: true, childList: true});
