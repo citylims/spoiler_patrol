@@ -1,10 +1,10 @@
 MutationObserver =  window.WebKitMutationObserver;
 var throttle = [];
 var observer = new MutationObserver(function(mutations, observer) {
-    throttle.push(observer);
-    if (throttle.length % 3 === 0) {
-      hoist();
-    }
+  throttle.push(observer);
+  if (throttle.length % 3 === 0) {
+    hoist();
+  }
 });
 
 observer.observe(document, {subtree: true, childList: true});
@@ -15,15 +15,12 @@ function hoist() {
 
 function getArray() {
   chrome.storage.sync.get(["spoilers"], function(result) {
-    console.log(result);
     noSpoilers(result);
   })
 };
 
 function setArray(obj, arr) {
-  chrome.storage.sync.set(obj, function() {
-    console.log("set storage" + arr);
-  })
+  chrome.storage.sync.set(obj);
 }
 
 var noSpoilers = function(obj) {
@@ -50,10 +47,7 @@ var noSpoilers = function(obj) {
     totalCount += matchCount;
   };
 
-  //send
-  chrome.runtime.sendMessage({spoilerCount: totalCount}, function(response) {
-    console.log(response.success);
-  });
+  chrome.runtime.sendMessage({spoilerCount: totalCount});
 };
 
 hoist();

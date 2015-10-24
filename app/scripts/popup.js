@@ -65,7 +65,7 @@ function setArray(obj) {
   })
 }
 
-//popupContent
+//DOM
 function updatePopup(arr) {
   if (arr.length) {
     arr.reverse();
@@ -77,8 +77,6 @@ function updatePopup(arr) {
     $("#spoilers").append('<h1 class="empty-message">No Spoilers!</h1>');
   }
 };
-
-//////////////events//////////////
 
 $('#searchWrap').bind('keypress', function(e) {
   if (e.which === 13) {

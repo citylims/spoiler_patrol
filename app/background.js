@@ -19,27 +19,22 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, updatedTab) {
     chrome.tabs.query({'active': true}, function (activeTabs) {
         var activeTab = activeTabs[0];
         if (activeTab == updatedTab) {
-        refreshScript();
+          refreshScript();
         }
     });
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    console.log(request);
-    //get spoiler count from content
     if (request.spoilerCount) {
       console.log("spoilerCount:" + request.spoilerCount);
       var display = request.spoilerCount.toString();
       chrome.browserAction.setBadgeText({text: display});
       sendResponse({success: "page spoiler count " + display});
-    }
-    else {
+    } else {
       chrome.browserAction.setBadgeText({text: "0"});
       sendResponse({success: "no matched spoilers"});
     }
-    //updated spoiler event in popup - refresh all tabs
     if (request.refresh) {
-      console.log("refresh");
       sendResponse({success: "Success"});
       refreshTabs();
     }
@@ -52,10 +47,8 @@ function refreshScript() {
 }
 
 function refreshTabs() {
-  console.log("update")
   chrome.tabs.query({}, function(tabs) {
     tabs.forEach(function(tab) {
-      console.log(tab);
       chrome.tabs.executeScript(tab.id, { file: "scripts/content.js" }, function() {});
     });
   });
