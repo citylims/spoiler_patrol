@@ -24,6 +24,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, updatedTab) {
     });
 });
 
+//messge router
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.spoilerCount) {
       console.log("spoilerCount:" + request.spoilerCount);
