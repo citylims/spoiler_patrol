@@ -1,5 +1,6 @@
 MutationObserver =  window.WebKitMutationObserver;
 var throttle = [];
+
 var observer = new MutationObserver(function(mutations, observer) {
   throttle.push(observer);
   if (throttle.length % 3 === 0) {
