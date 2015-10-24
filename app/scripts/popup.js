@@ -15,6 +15,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 function refresh() {
   chrome.runtime.sendMessage({refresh: true}, function(response) {
     console.log(response.success);
+    defineArray();
   });
 };
 
@@ -33,20 +34,10 @@ function defineArray(str, bool) {
       console.log("remove");
       removeSync(arr, str);
     } else {
-      refreshSettings(storage);
       updatePopup(arr);
     }
   });
 };
-
-function refreshSettings(storage, settings, arr) {
-  console.log("refresh settings");
-  var toggle = $("#refreshSettings").is(':checked')
-  $('#refresSetting').attr('checked', toggle);
-  storage.refreshSetting = toggle;
-  console.log(storage);
-  setArray(storage);
-}
 
 function addSync(arr, str) {
   var spoiler = {
@@ -85,10 +76,10 @@ function updatePopup(arr) {
     arr.reverse();
     $("#spoilers").empty();
     for (var i = 0; i < arr.length; i++) {
-      $("#spoilers").append('<li><p class="title">'+ arr[i].title + '</p><span class="count"> ' + arr[i].count + '</span><span class="delete">X</span></li>');
+      $("#spoilers").append('<li><p class="title">'+ arr[i].title + '</p><span class="count"> ' + arr[i].count + '</span><span class="delete">×</span></li>');
     }
   } else {
-    $("#spoilers").append('<h1>No Spoilers!</h1>');
+    $("#spoilers").append('<h1 class="empty-message">No Spoilers!</h1>');
   }
 };
 
@@ -102,10 +93,7 @@ $('#searchWrap').bind('keypress', function(e) {
 
 $("#addBtn").on('click', function(e) {
   e.preventDefault();
-  var str = $('input').val();
-  if (str) {
-    defineArray(str, true);
-  }
+  spoilerInput();
 });
 
 $('#spoilers').on('click', '.delete', function() {
@@ -114,6 +102,10 @@ $('#spoilers').on('click', '.delete', function() {
     defineArray(str, false);
 });
 
-$('#refreshSetting').on('click', function() {
-  defineArray();
-});
+function spoilerInput() {
+  var str = $('input').val();
+  if (str) {
+    $('input').val("");
+    defineArray(str, true)
+  }
+}
