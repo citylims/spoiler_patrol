@@ -3,7 +3,7 @@ var app = chrome.extension.getBackgroundPage();
 init();
 
 chrome.storage.onChanged.addListener(function(changes, namespace) {
-    console.log("updated storage");
+  defineArray();
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -14,7 +14,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 function refresh() {
   chrome.runtime.sendMessage({refresh: true}, function(response) {
-    console.log(response.success);
     defineArray();
   });
 };
@@ -28,10 +27,8 @@ function defineArray(str, bool) {
     var storage = result;
     var arr = result.spoilers ? result.spoilers : [];
     if (str && bool) {
-      console.log("add");
       addSync(arr, str);
     } else if (str && !bool) {
-      console.log("remove");
       removeSync(arr, str);
     } else {
       updatePopup(arr);
@@ -53,7 +50,6 @@ function addSync(arr, str) {
 function removeSync(arr, str) {
   for (var i = 0; i < arr.length; i ++) {
     if (arr[i].title === str) {
-      console.log("match " + arr[i].title);
       arr.splice(i, 1);
       var jsonObj = {};
       jsonObj.spoilers = arr;
@@ -71,7 +67,6 @@ function setArray(obj) {
 
 //popupContent
 function updatePopup(arr) {
-  console.log(arr);
   if (arr.length) {
     arr.reverse();
     $("#spoilers").empty();
