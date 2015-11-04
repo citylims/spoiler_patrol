@@ -3,7 +3,7 @@ var throttle = [];
 
 var observer = new MutationObserver(function(mutations, observer) {
   throttle.push(observer);
-  if (throttle.length % 3 === 0) {
+  if (throttle.length % 4 === 0) {
     hoist();
   }
 });
